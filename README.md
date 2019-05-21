@@ -2,9 +2,10 @@
 Data Structures and Algorithms example Kotlin
 
 ```
-Kotlin | 
+Kotlin  
 ```
-| Sr.no | Short Description | link | 
-| --- | --- | --- |
-| 1 | Searching Algo code | https://gist.github.com/worstkiller/339a040495a0abac0d3f40b2e759db49 |
-| 2 | Playground | https://pl.kotl.in/O8DYwRIwi |
+| Sr.no | Algo/DS | time | playground | link |
+| --- | --- | --- | -- | -- |
+| 1 | Linear Search | O(n) | https://pl.kotl.in/O8DYwRIwi | https://gist.github.com/worstkiller/339a040495a0abac0d3f40b2e759db49 |
+| 2 | Binary Search | O(log(n)) | https://pl.kotl.in/O8DYwRIwi | https://gist.github.com/worstkiller/339a040495a0abac0d3f40b2e759db49 |
+| 3 | Bubble Sort | O(n<sup>2</sup>) | https://pl.kotl.in/9QCpQ4PzY | https://gist.github.com/worstkiller/339a040495a0abac0d3f40b2e759db49 |
