@@ -7,6 +7,9 @@ package graphs
 
 const val SIZE = 20
 
+/**
+ * StackX class
+ */
 class StackX {
 
     var top = -1
@@ -16,7 +19,7 @@ class StackX {
      * call this to push something into the stack
      */
     fun push(value: Int) {
-        stack[top++] = value
+        stack[++top] = value
     }
 
     /**
@@ -33,6 +36,9 @@ class StackX {
         return stack[top]
     }
 
+    /**
+     * call this to get if the stack is empty or not
+     */
     fun isEmpty(): Boolean {
         return top == -1
     }
