@@ -4,7 +4,7 @@ package graphs
  * a main class for the graph to execute the data structure operations
  */
 fun main() {
-    val alphas = arrayOf("A", "B", "C", "D", "E")
+    val alphas = arrayOf("A", "B", "F", "H", "C", "D", "G", "I", "E")
     val graph = Graph()
     //adding the graphs
     for (alpha in alphas) {
@@ -13,8 +13,12 @@ fun main() {
 
     graph.addAdjVertex(0, 1)
     graph.addAdjVertex(1, 2)
-    graph.addAdjVertex(0, 3)
-    graph.addAdjVertex(3, 4)
+    graph.addAdjVertex(2, 3)
+    graph.addAdjVertex(0, 4)
+    graph.addAdjVertex(0, 5)
+    graph.addAdjVertex(5, 6)
+    graph.addAdjVertex(6, 7)
+    graph.addAdjVertex(0, 8)
 
     print("Visits \n")
 
