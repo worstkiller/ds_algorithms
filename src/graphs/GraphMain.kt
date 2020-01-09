@@ -11,14 +11,10 @@ fun main() {
         graph.addVertex(alpha)
     }
 
-    graph.addAdjacenyBetweenVertex(0, 1)
-    graph.addAdjacenyBetweenVertex(1, 2)
-    graph.addAdjacenyBetweenVertex(0, 3)
-    graph.addAdjacenyBetweenVertex(3, 4)
-
-    println("The total no of vertexs are ${graph.getTotalVertexs()}")
-
-    println("The Vertex information is = ${graph.getVertex("Berlin")?.toString() ?: "Not present"}")
+    graph.addAdjVertex(0, 1)
+    graph.addAdjVertex(1, 2)
+    graph.addAdjVertex(0, 3)
+    graph.addAdjVertex(3, 4)
 
     print("Visits \n")
 

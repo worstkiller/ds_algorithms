@@ -5,7 +5,7 @@ package graphs
  * this stack is an int stack taking only integer values
  */
 
-const val SIZE = 20
+const val SIZE = 10
 
 /**
  * StackX class

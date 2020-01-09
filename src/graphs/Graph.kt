@@ -4,7 +4,7 @@ package graphs
  * A graph stores the vertex and adjacent vertex information
  */
 
-const val GRAPH_SIZE = 20
+const val GRAPH_SIZE = 10
 
 class Graph {
     private var vertexPosition: Int = 0
@@ -16,7 +16,8 @@ class Graph {
      * call this to add the vertex to the graph
      */
     fun addVertex(name: String) {
-        vertexArray[vertexPosition++] = Vertex(name, vertexPosition, false)
+        val vertex = Vertex(name, vertexPosition, false)
+        vertexArray[vertexPosition++] = vertex
     }
 
     /**
@@ -41,7 +42,7 @@ class Graph {
     /**
      * pass the vertex positions to which adjacent edges has to be added
      */
-    fun addAdjacenyBetweenVertex(first: Int, second: Int) {
+    fun addAdjVertex(first: Int, second: Int) {
         adjVertex[first][second] = 1
         adjVertex[second][first] = 1
     }
@@ -49,7 +50,7 @@ class Graph {
     /**
      * this prints the name of the vertex give the vertex position
      */
-    fun printTheAdjacentNodes(first: Int) {
+    fun printTheNodes(first: Int) {
         print(vertexArray[first]?.name)
     }
 
@@ -99,7 +100,7 @@ class Graph {
      */
     private fun visitNode(it: Vertex) {
         it.wasVisited = true
-        printTheAdjacentNodes(it.position)
+        printTheNodes(it.position)
         stackX.push(it.position)
     }
 
@@ -107,10 +108,12 @@ class Graph {
      * It returns the un visited vertex position of the current vertex otherwise null
      */
     fun getAdjUnVisitedVertex(name: String): Vertex? {
-        for (node in vertexArray.indices) {
-            getVertex(name)?.let {
-                if (adjVertex[it.position][node] == 1 && !it.wasVisited) {
-                    return it
+        getVertex(name)?.let {
+            for (node in vertexArray) {
+                node?.let { path ->
+                    if (adjVertex[it.position][path.position] == 1 && !path.wasVisited) {
+                        return path
+                    }
                 }
             }
         }
