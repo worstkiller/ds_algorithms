@@ -5,12 +5,14 @@ package graphs
  * this stack is an int stack taking only integer values
  */
 
-const val SIZE = 10
-
 /**
  * StackX class
  */
 class StackX {
+
+    companion object{
+        const val SIZE = 10
+    }
 
     var top = -1
     val stack = IntArray(SIZE)

@@ -11,6 +11,7 @@ class Graph {
     private val adjVertex = Array(GRAPH_SIZE) { IntArray(GRAPH_SIZE) }
     private val vertexArray = arrayOfNulls<Vertex>(GRAPH_SIZE)
     private val stackX = StackX()
+    private val queueX = QueueX()
 
     /**
      * call this to add the vertex to the graph
@@ -65,7 +66,7 @@ class Graph {
     fun dfs() {
         //step 1
         vertexArray[0]?.let {
-            visitNode(it)
+            visitNodeDfs(it)
         }
         while (!stackX.isEmpty()) {
             //step 2
@@ -75,11 +76,42 @@ class Graph {
                 if (nextNode == null) {
                     stackX.pop()
                 } else {
-                    visitNode(nextNode)
+                    visitNodeDfs(nextNode)
                 }
             }
         }
 
+        //reset the graph
+        clearGraph()
+    }
+
+    /**
+     * this traverses the vertexs using queue as data structure
+     * this does 4 things by default
+     * 1 it examins the top queue item using remove
+     * 2 it tries to find the un visited neighbor of this vertex
+     * 3 if it doesn't find one then it pops the stack
+     * 4 if it finds such a vertex, it visits that vertex and pushes onto the stack
+     */
+    fun bfs() {
+        //step 1 visit the starting point first marks it, inserts it into queue and displays them
+        vertexArray[0]?.let {
+            visitNodeBfs(it)
+        }
+        while (!queueX.isEmpty()) { //while queue is not empty
+            val v1 = queueX.remove() //remove vertex at head
+            //loop until the head has no unvisited vertexes
+            vertexArray[v1]?.let {
+                while (true) {
+                    val adjacentVertex = getAdjUnVisitedVertex(it.name)
+                    if (adjacentVertex != null) {
+                        visitNodeBfs(adjacentVertex)
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
         //reset the graph
         clearGraph()
     }
@@ -98,10 +130,21 @@ class Graph {
      * display it
      * mark them visited
      */
-    private fun visitNode(it: Vertex) {
+    private fun visitNodeDfs(it: Vertex) {
         it.wasVisited = true
         printTheNodes(it.position)
         stackX.push(it.position)
+    }
+
+    /**
+     * insert them to queue
+     * display it
+     * mark them visited
+     */
+    private fun visitNodeBfs(it: Vertex) {
+        it.wasVisited = true
+        printTheNodes(it.position)
+        queueX.insert(it.position)
     }
 
     /**

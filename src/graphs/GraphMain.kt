@@ -20,8 +20,16 @@ fun main() {
     graph.addAdjVertex(6, 7)
     graph.addAdjVertex(0, 8)
 
-    print("Visits \n")
+    print("Visits Dfs\n")
 
     graph.dfs()
+
+    println()
+
+    print("Visits Bfs")
+
+    println()
+
+    graph.bfs()
 
 }
