@@ -117,6 +117,36 @@ class Graph {
     }
 
     /**
+     * this finds the minimum path for visiting all the vertexes
+     */
+    fun mst() {
+        //step 1 mark it first node or start with first node to find the all possible nodes
+        vertexArray[0]?.let {
+            visitNodeMst(it)
+        }
+        //step 2 check until it is empty
+        while (!stackX.isEmpty()) {
+            //step 3 get top vertex position from stack
+            vertexArray[stackX.peek()]?.let { currentVertex ->
+                //step 4 get next unvisited node for the current vertex
+                val nextNode = getAdjUnVisitedVertex(currentVertex.name)
+                //step 5 if no neighbors then pop the stack to find the next one
+                if (nextNode == null) {
+                    stackX.pop()
+                } else {
+                    //step 6 mark the found node for the current node and print it along with current node
+                    visitNodeMst(nextNode)
+                    printTheNodes(currentVertex.position)
+                    printTheNodes(nextNode.position)
+                    print(" ")
+                }
+            }
+        }
+        //reset the flags after operation
+        clearGraph()
+    }
+
+    /**
      * this clears the dfs operation related values reset
      */
     private fun clearGraph() {
@@ -145,6 +175,16 @@ class Graph {
         it.wasVisited = true
         printTheNodes(it.position)
         queueX.insert(it.position)
+    }
+
+    /**
+     * this method does two things
+     * mark it visited
+     * and inserts the visited node into the stack
+     */
+    private fun visitNodeMst(vertex: Vertex) {
+        vertex.wasVisited = true
+        stackX.push(vertex.position)
     }
 
     /**

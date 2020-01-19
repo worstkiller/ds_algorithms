@@ -4,7 +4,7 @@ package graphs
  * a main class for the graph to execute the data structure operations
  */
 fun main() {
-    val alphas = arrayOf("A", "B", "F", "H", "C", "D", "G", "I", "E")
+    val alphas = arrayOf('A'..'E').map { it.toString() }.toList()
     val graph = Graph()
     //adding the graphs
     for (alpha in alphas) {
@@ -31,5 +31,9 @@ fun main() {
     println()
 
     graph.bfs()
+
+    println("Visits Mst")
+
+    graph.mst()
 
 }
