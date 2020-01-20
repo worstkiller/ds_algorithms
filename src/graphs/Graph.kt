@@ -7,7 +7,7 @@ package graphs
 const val GRAPH_SIZE = 10
 
 class Graph {
-    private var vertexPosition: Int = 0
+    private var vertexCount: Int = 0
     private val adjVertex = Array(GRAPH_SIZE) { IntArray(GRAPH_SIZE) }
     private val vertexArray = arrayOfNulls<Vertex>(GRAPH_SIZE)
     private val stackX = StackX()
@@ -17,8 +17,8 @@ class Graph {
      * call this to add the vertex to the graph
      */
     fun addVertex(name: String) {
-        val vertex = Vertex(name, vertexPosition, false)
-        vertexArray[vertexPosition++] = vertex
+        val vertex = Vertex(name, vertexCount, false)
+        vertexArray[vertexCount++] = vertex
     }
 
     /**
@@ -37,7 +37,7 @@ class Graph {
      * this returns the total number of the vertexes in a graph
      */
     fun getTotalVertexs(): Int {
-        return vertexPosition
+        return vertexCount
     }
 
     /**
@@ -51,7 +51,7 @@ class Graph {
     /**
      * this prints the name of the vertex give the vertex position
      */
-    fun printTheNodes(first: Int) {
+    fun displayVertex(first: Int) {
         print(vertexArray[first]?.name)
     }
 
@@ -136,8 +136,8 @@ class Graph {
                 } else {
                     //step 6 mark the found node for the current node and print it along with current node
                     visitNodeMst(nextNode)
-                    printTheNodes(currentVertex.position)
-                    printTheNodes(nextNode.position)
+                    displayVertex(currentVertex.position)
+                    displayVertex(nextNode.position)
                     print(" ")
                 }
             }
@@ -162,7 +162,7 @@ class Graph {
      */
     private fun visitNodeDfs(it: Vertex) {
         it.wasVisited = true
-        printTheNodes(it.position)
+        displayVertex(it.position)
         stackX.push(it.position)
     }
 
@@ -173,7 +173,7 @@ class Graph {
      */
     private fun visitNodeBfs(it: Vertex) {
         it.wasVisited = true
-        printTheNodes(it.position)
+        displayVertex(it.position)
         queueX.insert(it.position)
     }
 
