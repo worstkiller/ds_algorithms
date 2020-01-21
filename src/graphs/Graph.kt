@@ -49,7 +49,7 @@ class Graph {
     }
 
     /**
-     * this prints the name of the vertex give the vertex position
+     * this prints the name of the vertex given the vertex position
      */
     fun displayVertex(first: Int) {
         print(vertexArray[first]?.name)

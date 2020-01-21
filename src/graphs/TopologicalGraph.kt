@@ -1,13 +1,14 @@
 package graphs
 
 /**
- * a graph with all the basic features but handles directed graphs
+ * a graph with all the basic features but handles directed graphs with topological order
+ * certain nodes must be visit before visiting another
  */
 class TopologicalGraph {
     private var vertexCount: Int = 0 //current number of  vertices
     private val adjVertex = Array(GRAPH_SIZE) { IntArray(GRAPH_SIZE) } //[n]X[n] adjacency list
     private val vertexArray = arrayOfNulls<Vertex>(GRAPH_SIZE) //vertex array
-    private val sortedArray = CharArray(GRAPH_SIZE) //store the directed nodes
+    private val sortedArray = emptyArray<String>()  //store the directed nodes
 
     /**
      * call this to add the vertex to the graph
@@ -18,7 +19,7 @@ class TopologicalGraph {
     }
 
     /**
-     * this  vertex name has to be unique
+     * this vertex name has to be unique
      */
     fun getVertex(name: String): Vertex? {
         for (vertex in vertexArray) {
@@ -37,7 +38,7 @@ class TopologicalGraph {
     }
 
     /**
-     * this prints the name of the vertex give the vertex position
+     * this prints the name of the vertex given the vertex position
      */
     fun displayVertex(first: Int) {
         print(vertexArray[first]?.name)
@@ -49,7 +50,88 @@ class TopologicalGraph {
      * to fulfill the constraint for topological graph
      */
     fun sortTopo() {
-       
+        val noOfVertices = vertexCount
+        while (vertexCount > 0) {
+            //get the no successor node to start with
+            val currentVertex = noSuccessors()
+            if (currentVertex == null) {
+                println("This graph is cyclic or it has loops")
+            } else {
+                sortedArray[vertexCount - 1] = currentVertex.name
+                deleteVertex(currentVertex.position)
+            }
+        }
+        displayTopologicalOrder(noOfVertices)
+    }
+
+    /**
+     * to find the node or vertex with no successor or forward node from current one
+     */
+    fun noSuccessors(): Vertex? {
+        var isEdge: Boolean //edge from row to column in adjacency matrix
+        for (rows in 0..vertexCount) {
+            isEdge = false
+            for (column in 0..vertexCount) {
+                if (adjVertex[rows][column] == 1) {
+                    isEdge = true
+                    break //found edge between two vertices, break and return for next iteration
+                }
+            }
+            if (!isEdge) { //if no edge return the row
+                return vertexArray[rows]
+            }
+        }
+        return null
+    }
+
+    /**
+     * delete the given node and move the positions of existing nodes
+     */
+    fun deleteVertex(nodePosition: Int) {
+        //if not last vertex
+        if (nodePosition != vertexCount - 1) {
+            //removing the node from the vertex list
+            for (count in nodePosition until vertexCount - 1) {
+                vertexArray[count] = vertexArray[count + 1]
+            }
+
+            //moving the row or delete the row by shifting data to previous row upwards
+            for (row in nodePosition until vertexCount - 1) {
+                moveRowUp(row, vertexCount)
+            }
+
+            //removing the column from the adjacency matrix by shifting data to left
+            for (column in nodePosition until vertexCount - 1) {
+                moveColumnLeft(column, vertexCount)
+            }
+        }
+    }
+
+    /**
+     * call this to move the data upwards in adjacency matrix
+     */
+    private fun moveRowUp(row: Int, length: Int) {
+        for (column in 0 until length) {
+            adjVertex[row][column] = adjVertex[row + 1][column]
+        }
+    }
+
+    /**
+     * call this to move the column data to left in adjacency matrix
+     */
+    private fun moveColumnLeft(column: Int, length: Int) {
+        for (row in 0 until length) {
+            adjVertex[row][column] = adjVertex[row][column + 1]
+        }
+    }
+
+    /**
+     * iterates over the sorted array and displays it accordingly
+     */
+    fun displayTopologicalOrder(noOfVertices: Int) {
+        print("Topological Order is as follows")
+        for (count in 0..noOfVertices)
+            print(sortedArray[count])
     }
 
 }
