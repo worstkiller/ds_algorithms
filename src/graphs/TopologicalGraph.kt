@@ -8,7 +8,7 @@ class TopologicalGraph {
     private var vertexCount: Int = 0 //current number of  vertices
     private val adjVertex = Array(GRAPH_SIZE) { IntArray(GRAPH_SIZE) } //[n]X[n] adjacency list
     private val vertexArray = arrayOfNulls<Vertex>(GRAPH_SIZE) //vertex array
-    private val sortedArray = emptyArray<String>()  //store the directed nodes
+    private val sortedArray = arrayOfNulls<String>(GRAPH_SIZE)  //store the directed nodes
 
     /**
      * call this to add the vertex to the graph
@@ -56,10 +56,10 @@ class TopologicalGraph {
             val currentVertex = noSuccessors()
             if (currentVertex == null) {
                 println("This graph is cyclic or it has loops")
-            } else {
-                sortedArray[vertexCount - 1] = currentVertex.name
-                deleteVertex(currentVertex.position)
+                return
             }
+            sortedArray[vertexCount - 1] = vertexArray[currentVertex]?.name
+            deleteVertex(currentVertex)
         }
         displayTopologicalOrder(noOfVertices)
     }
@@ -67,18 +67,18 @@ class TopologicalGraph {
     /**
      * to find the node or vertex with no successor or forward node from current one
      */
-    fun noSuccessors(): Vertex? {
+    fun noSuccessors(): Int? {
         var isEdge: Boolean //edge from row to column in adjacency matrix
-        for (rows in 0..vertexCount) {
+        for (rows in 0 until vertexCount) {
             isEdge = false
-            for (column in 0..vertexCount) {
-                if (adjVertex[rows][column] == 1) {
+            for (column in 0 until vertexCount) {
+                if (adjVertex[rows][column] > 0) {
                     isEdge = true
                     break //found edge between two vertices, break and return for next iteration
                 }
             }
             if (!isEdge) { //if no edge return the row
-                return vertexArray[rows]
+                return rows
             }
         }
         return null
@@ -88,6 +88,7 @@ class TopologicalGraph {
      * delete the given node and move the positions of existing nodes
      */
     fun deleteVertex(nodePosition: Int) {
+        print(nodePosition)
         //if not last vertex
         if (nodePosition != vertexCount - 1) {
             //removing the node from the vertex list
@@ -102,9 +103,10 @@ class TopologicalGraph {
 
             //removing the column from the adjacency matrix by shifting data to left
             for (column in nodePosition until vertexCount - 1) {
-                moveColumnLeft(column, vertexCount)
+                moveColumnLeft(column, vertexCount - 1)
             }
         }
+        vertexCount--
     }
 
     /**
@@ -129,9 +131,10 @@ class TopologicalGraph {
      * iterates over the sorted array and displays it accordingly
      */
     fun displayTopologicalOrder(noOfVertices: Int) {
-        print("Topological Order is as follows")
-        for (count in 0..noOfVertices)
+        println("Topological Order is as follows")
+        for (count in 0 until noOfVertices)
             print(sortedArray[count])
+        println()
     }
 
 }
